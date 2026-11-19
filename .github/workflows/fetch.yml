@@ -33,7 +33,7 @@ jobs:
               [ -z "${label:-}" ] && continue
               case "$label" in \#*) continue;; esac
               host=$(echo "$url" | sed -E 's#^https://([^/]+).*#\1#')
-              if ! echo "$url" | grep -qE '^https://' || ! echo "$host" | grep -qiE '(\.(gov|us)|^(www\.)?(nmonesource\.com|ksrevisor\.org|oscn\.net))$'; then
+              if ! echo "$url" | grep -qE '^https://' || ! echo "$host" | grep -qiE '(\.(gov|us)|(^|\.)(nmonesource\.com|ksrevisor\.org|oscn\.net))$'; then
                 echo "| $label | SKIP-not-official-host | 0 | $url | | |" >> "$o/_status.md"; continue; fi
               f="$o/$(printf '%s' "$label" | tr -c 'A-Za-z0-9._-' '_')"
               code=$(curl -sS -L --retry 3 --retry-delay 5 --max-time 600 -A "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130 Safari/537.36" -o "$f" -w '%{http_code}' "$url" || echo ERR)
