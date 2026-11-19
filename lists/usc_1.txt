@@ -1,0 +1,6 @@
+USC_download_page https://uscode.house.gov/download/download.shtml
+USC_prior_releasepoints https://uscode.house.gov/download/priorreleasepoints.htm
+USC_browse https://uscode.house.gov/browse.xhtml
+USC_xml_schema_page https://uscode.house.gov/download/resources/USLM-User-Guide.pdf
+USConst_root https://constitution.congress.gov/constitution/
+USConst_browse https://constitution.congress.gov/browse/
