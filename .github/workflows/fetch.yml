@@ -1,0 +1,60 @@
+name: fetch
+# Downloads official law files from a US GitHub runner.
+# lists/<name>.txt: one "LABEL URL" per line. Every list changed in a push is fetched;
+# each result goes to branch `results` as results/<name>.zip (+ <name>.status.md).
+on:
+  push:
+    paths: ["lists/**"]
+  workflow_dispatch:
+    inputs:
+      lists: { description: "list names in lists/ (without .txt), space-separated", required: true, default: "probe" }
+permissions:
+  contents: write
+concurrency: { group: "fetch-${{ github.run_id }}", cancel-in-progress: false }
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 340
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 2 }
+      - name: Fetch
+        run: |
+          set -u
+          LISTS="${{ github.event.inputs.lists }}"
+          if [ -z "$LISTS" ]; then LISTS=$(git diff --name-only HEAD~1 HEAD -- lists | grep '\.txt$' | xargs -r -n1 basename | sed 's/\.txt$//' | tr '\n' ' '); fi
+          echo "LISTS=$LISTS" >> "$GITHUB_ENV"
+          mkdir -p zips
+          for L in $LISTS; do
+            o="out/$L"; mkdir -p "$o"
+            echo "| label | http | bytes | url | title | flag |" > "$o/_status.md"
+            echo "|---|---|---|---|---|---|" >> "$o/_status.md"
+            tr -d '\r' < "lists/$L.txt" | while read -r label url; do
+              [ -z "${label:-}" ] && continue
+              case "$label" in \#*) continue;; esac
+              host=$(echo "$url" | sed -E 's#^https://([^/]+).*#\1#')
+              if ! echo "$url" | grep -qE '^https://' || ! echo "$host" | grep -qiE '(\.(gov|us)|^(www\.)?(nmonesource\.com|ksrevisor\.org|oscn\.net))$'; then
+                echo "| $label | SKIP-not-official-host | 0 | $url | | |" >> "$o/_status.md"; continue; fi
+              f="$o/$(printf '%s' "$label" | tr -c 'A-Za-z0-9._-' '_')"
+              code=$(curl -sS -L --retry 3 --retry-delay 5 --max-time 600 -A "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130 Safari/537.36" -o "$f" -w '%{http_code}' "$url" || echo ERR)
+              size=$(stat -c %s "$f" 2>/dev/null || echo 0)
+              title=$(head -c 200000 "$f" 2>/dev/null | tr '\n' ' ' | grep -oiE '<title>[^<]{0,80}' | head -1 | sed 's/<title>//I')
+              flag=""; grep -qiE 'cf-challenge|Just a moment|captcha|Access Denied' "$f" 2>/dev/null && flag="CHALLENGE?"
+              echo "| $label | $code | $size | $url | $title | $flag |" >> "$o/_status.md"
+              sleep 0.5
+            done
+            (cd "$o" && zip -qr "../../zips/$L.zip" .)
+            cp "$o/_status.md" "zips/$L.status.md"
+            awk -F'|' 'NR>2{c[$3]++} END{for(k in c) printf "%s:%d ", k, c[k]; print ""}' "$o/_status.md" | sed "s/^/$L codes: /" | tee -a "$GITHUB_STEP_SUMMARY"
+          done
+      - name: Publish to branch results
+        run: |
+          mkdir -p /tmp/z && cp zips/* /tmp/z/
+          for i in 1 2 3 4 5 6 7 8; do
+            if git fetch -q origin results 2>/dev/null; then git checkout -q -B results FETCH_HEAD; else git checkout -q --orphan results; git rm -rq --cached . >/dev/null 2>&1 || true; fi
+            mkdir -p results && cp /tmp/z/* results/ && git add results/
+            git -c user.name=fetch-bot -c user.email=noreply@github.com commit -qm "results: $LISTS" || exit 0
+            git push -q origin results && exit 0
+            sleep $((RANDOM % 20 + 5))
+          done
+          exit 1
