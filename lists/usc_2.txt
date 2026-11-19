@@ -1,0 +1,8 @@
+USC_T26 https://uscode.house.gov/download/releasepoints/us/pl/119/142/xml_usc26@119-142.zip
+USC_T15 https://uscode.house.gov/download/releasepoints/us/pl/119/142/xml_usc15@119-142.zip
+USC_T42 https://uscode.house.gov/download/releasepoints/us/pl/119/142/xml_usc42@119-142.zip
+USC_T29 https://uscode.house.gov/download/releasepoints/us/pl/119/142/xml_usc29@119-142.zip
+USC_T08 https://uscode.house.gov/download/releasepoints/us/pl/119/142/xml_usc08@119-142.zip
+USC_T11 https://uscode.house.gov/download/releasepoints/us/pl/119/142/xml_usc11@119-142.zip
+USC_T28 https://uscode.house.gov/download/releasepoints/us/pl/119/142/xml_usc28@119-142.zip
+USC_T18 https://uscode.house.gov/download/releasepoints/us/pl/119/142/xml_usc18@119-142.zip
