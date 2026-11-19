@@ -1,0 +1,9 @@
+INTL_probe_cis_minsk https://cis.minsk.by/
+INTL_probe_ecis https://e-cis.info/
+INTL_probe_eaeu_docs https://docs.eaeunion.org/
+INTL_probe_icao_montreal https://www.icao.int/secretariat/legal/List%20of%20Parties/Mtl99_EN.pdf
+INTL_probe_coe_024 https://www.coe.int/en/web/conventions/full-list?module=treaty-detail&treatynum=024
+INTL_probe_coe_108 https://www.coe.int/en/web/conventions/full-list?module=treaty-detail&treatynum=108
+INTL_probe_caspian https://adilet.zan.kz/rus/docs/Z1800000002
+INTL_probe_untc_list https://treaties.un.org/pages/ParticipationStatus.aspx?clang=_en
+INTL_probe_hcch_status https://www.hcch.net/en/instruments/conventions/status-table

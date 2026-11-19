@@ -1,0 +1,16 @@
+MEPDF_1 https://legislature.maine.gov/statutes/1/title1.pdf
+MEPDF_2 https://legislature.maine.gov/statutes/2/title2.pdf
+MEPDF_3 https://legislature.maine.gov/statutes/3/title3.pdf
+MEPDF_4 https://legislature.maine.gov/statutes/4/title4.pdf
+MEPDF_5 https://legislature.maine.gov/statutes/5/title5.pdf
+MEPDF_6 https://legislature.maine.gov/statutes/6/title6.pdf
+MEPDF_7 https://legislature.maine.gov/statutes/7/title7.pdf
+MEPDF_7-A https://legislature.maine.gov/statutes/7-A/title7-A.pdf
+MEPDF_8 https://legislature.maine.gov/statutes/8/title8.pdf
+MEPDF_9 https://legislature.maine.gov/statutes/9/title9.pdf
+MEPDF_9-A https://legislature.maine.gov/statutes/9-A/title9-A.pdf
+MEPDF_9-B https://legislature.maine.gov/statutes/9-B/title9-B.pdf
+MEPDF_10 https://legislature.maine.gov/statutes/10/title10.pdf
+MEPDF_11 https://legislature.maine.gov/statutes/11/title11.pdf
+MEPDF_12 https://legislature.maine.gov/statutes/12/title12.pdf
+MEPDF_13 https://legislature.maine.gov/statutes/13/title13.pdf

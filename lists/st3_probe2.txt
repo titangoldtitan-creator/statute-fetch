@@ -1,0 +1,4 @@
+VT_chapter_page https://legislature.vermont.gov/statutes/chapter/01/003
+VT_fullchapter_chk https://legislature.vermont.gov/statutes/fullchapter/01/003
+KY_sec_chk https://apps.legislature.ky.gov/law/statutes/statute.aspx?id=50298
+NE_display_chk https://nebraskalegislature.gov/laws/display-chapters.php?chapter=1

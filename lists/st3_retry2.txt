@@ -1,0 +1,11 @@
+OK_STOKST02 https://www.oscn.net/applications/oscn/Index.asp?ftdb=STOKST02&level=1
+OK_STOKST03 https://www.oscn.net/applications/oscn/Index.asp?ftdb=STOKST03&level=1
+OK_STOKST3A https://www.oscn.net/applications/oscn/Index.asp?ftdb=STOKST3A&level=1
+OK_STOKST04 https://www.oscn.net/applications/oscn/Index.asp?ftdb=STOKST04&level=1
+OK_STOKST05 https://www.oscn.net/applications/oscn/Index.asp?ftdb=STOKST05&level=1
+OK_STOKST06 https://www.oscn.net/applications/oscn/Index.asp?ftdb=STOKST06&level=1
+OK_STOKST07 https://www.oscn.net/applications/oscn/Index.asp?ftdb=STOKST07&level=1
+OK_STOKST08 https://www.oscn.net/applications/oscn/Index.asp?ftdb=STOKST08&level=1
+OK_STOKST09 https://www.oscn.net/applications/oscn/Index.asp?ftdb=STOKST09&level=1
+CT_titles https://www.cga.ct.gov/current/pub/titles.htm
+CT_constitution https://www.cga.ct.gov/current/pub/constitution.htm
