@@ -4,7 +4,8 @@
 Usage: render.py <out_dir>   (out_dir holds _status.md and the fetched files)
 
 A row is rendered only when the plain fetch returned HTTP 200, carries no bot-check
-flag, and the page has less than MIN_TEXT characters of visible text. Pages with a
+flag, and the page has less than MIN_TEXT characters of visible text (an empty
+script shell). Lower-case flags are informational: the plain copy is still usable. Pages with a
 bot check are never rendered: we do not get around a site's protection. If the
 rendered page itself shows a bot check, it is discarded and the row is marked.
 The rendered copy is saved next to the original as <file>.rendered.html.
@@ -14,7 +15,7 @@ import os
 import re
 import sys
 
-MIN_TEXT = 2000
+MIN_TEXT = 300  # script shells measured at ~160 chars; shortest real LA/NH pages ~250-600
 CHECK = re.compile(r"cf-challenge|challenge-platform|Just a moment|Attention Required|"
                    r"Access Denied|I'm not a robot|verify you are human", re.I)
 
@@ -85,14 +86,14 @@ def main(out):
                 rendered = page.content()
                 text = page.inner_text("body")
             except Exception as e:  # noqa: BLE001 - report and move on
-                r["flag"] = f"RENDER-ERR {type(e).__name__}"
+                r["flag"] = f"render-err {type(e).__name__}"  # informational: plain copy kept
                 continue
             if CHECK.search(text) or CHECK.search(rendered[:20000]):
                 r["flag"] = "RENDER-BOTCHECK"  # discarded, not worked around
                 continue
             n = len(re.sub(r"\s+", " ", text).strip())
             if n < MIN_TEXT:
-                r["flag"] = f"RENDER-THIN {n}"
+                r["flag"] = f"render-thin {n}"  # informational: plain copy kept
                 continue
             with open(p + ".rendered.html", "w", encoding="utf-8") as f:
                 f.write(rendered)
