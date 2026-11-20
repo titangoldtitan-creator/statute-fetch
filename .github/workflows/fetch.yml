@@ -18,6 +18,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with: { fetch-depth: 2 }
+      - name: Browser for rendering
+        run: pip install -q playwright==1.48.0 && python3 -m playwright install --with-deps chromium
       - name: Fetch
         run: |
           set -u
@@ -39,10 +41,12 @@ jobs:
               code=$(curl -sS -L --retry 3 --retry-delay 5 --max-time 600 -A "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130 Safari/537.36" -o "$f" -w '%{http_code}' "$url" || echo ERR)
               size=$(stat -c %s "$f" 2>/dev/null || echo 0)
               title=$(head -c 200000 "$f" 2>/dev/null | tr '\n' ' ' | grep -oiE '<title>[^<]{0,80}' | head -1 | sed 's/<title>//I')
-              flag=""; grep -qiE 'cf-challenge|Just a moment|captcha|Access Denied' "$f" 2>/dev/null && flag="CHALLENGE?"
+              flag=""; grep -qiE 'cf-challenge|challenge-platform|Just a moment|Attention Required|Access Denied' "$f" 2>/dev/null && flag="CHALLENGE?"
               echo "| $label | $code | $size | $url | $title | $flag |" >> "$o/_status.md"
               sleep 0.5
             done
+            # second method: render empty script shells (never pages with a bot check)
+            python3 scripts/render.py "$o" || echo "render step failed for $L" | tee -a "$GITHUB_STEP_SUMMARY"
             (cd "$o" && zip -qr "../../zips/$L.zip" .)
             cp "$o/_status.md" "zips/$L.status.md"
             awk -F'|' 'NR>2{c[$3]++} END{for(k in c) printf "%s:%d ", k, c[k]; print ""}' "$o/_status.md" | sed "s/^/$L codes: /" | tee -a "$GITHUB_STEP_SUMMARY"

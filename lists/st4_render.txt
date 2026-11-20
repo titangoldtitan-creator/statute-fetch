@@ -1,0 +1,6 @@
+AL_toc_a https://alison.legislature.state.al.us/code-of-alabama
+AL_legacy_sample https://www.legislature.state.al.us/legacy/CodeOfAlabama/1975/123825.htm
+SD_t1 https://sdlegislature.gov/Statutes/1
+SD_stat_root https://sdlegislature.gov/Statutes
+LA_rs_toc https://legis.la.gov/legis/Laws_Toc.aspx?folder=75&level=Parent
+LA_const_toc https://legis.la.gov/legis/Laws_Toc.aspx?folder=72&level=Parent
