@@ -1,0 +1,36 @@
+name: toc
+# Builds a fetch list from a site's table of contents when the links are not plain
+# HTML (e.g. ASP.NET postbacks). Runs scripts/toc_<site>.py <args>; the list is
+# published to branch `results` as results/<name>.txt for review before fetching.
+on:
+  workflow_dispatch:
+    inputs:
+      site: { description: "script suffix: scripts/toc_<site>.py", required: true }
+      args: { description: "arguments for the script", required: true }
+      name: { description: "output list name", required: true }
+permissions:
+  contents: write
+concurrency: { group: "toc-${{ github.run_id }}", cancel-in-progress: false }
+jobs:
+  toc:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build list
+        env: { SITE: "${{ inputs.site }}", ARGS: "${{ inputs.args }}", NAME: "${{ inputs.name }}" }
+        run: |
+          echo "$SITE" | grep -qE '^[a-z]{2,8}$' && echo "$NAME" | grep -qE '^[a-z0-9_]+$' && echo "$ARGS" | grep -qE '^[0-9 ]+$'
+          python3 -I "scripts/toc_$SITE.py" $ARGS > "/tmp/$NAME.txt"
+          wc -l "/tmp/$NAME.txt" | tee -a "$GITHUB_STEP_SUMMARY"
+      - name: Publish to branch results
+        env: { NAME: "${{ inputs.name }}" }
+        run: |
+          for i in 1 2 3 4 5 6 7 8; do
+            if git fetch -q origin results 2>/dev/null; then git checkout -q -B results FETCH_HEAD; else git checkout -q --orphan results; git rm -rq --cached . >/dev/null 2>&1 || true; fi
+            mkdir -p results && cp "/tmp/$NAME.txt" results/ && git add results/
+            git -c user.name=fetch-bot -c user.email=noreply@github.com commit -qm "toc: $NAME" || exit 0
+            git push -q origin results && exit 0
+            sleep $((RANDOM % 20 + 5))
+          done
+          exit 1
