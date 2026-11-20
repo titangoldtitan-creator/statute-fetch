@@ -1,0 +1,6 @@
+SD_api_title1 https://sdlegislature.gov/api/Statutes/Title/1
+SD_api_titles https://sdlegislature.gov/api/Statutes/Titles
+SD_api_ch_list https://sdlegislature.gov/api/Statutes/Chapters/1
+SD_api_title1_html https://sdlegislature.gov/api/Statutes/1.html
+WV_chap_entire_01 https://www.wvlegislature.gov/wvcode/ChapterEntire.cfm?chap=01
+WV_const https://www.wvlegislature.gov/WVCODE/WV_CON.cfm
