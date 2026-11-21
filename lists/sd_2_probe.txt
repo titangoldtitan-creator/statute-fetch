@@ -1,0 +1,5 @@
+SD_T27A https://sdlegislature.gov/api/Statutes/27A.html
+SD_T34A https://sdlegislature.gov/api/Statutes/34A.html
+SD_T34B https://sdlegislature.gov/api/Statutes/34B.html
+SD_T51A https://sdlegislature.gov/api/Statutes/51A.html
+SD_T57A https://sdlegislature.gov/api/Statutes/57A.html
